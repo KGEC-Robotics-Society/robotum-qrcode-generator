@@ -224,7 +224,7 @@ def save():
     qr.add_data(f'Name:"{Name}", app:"{AppD}", iot:"{IoT}", ml:"{ML}", cloud:"{CD}", mechatronics:"{Mecha}", web:"{WebD}", design:"{Des}", video:"{Vid}", content:"{Cont}"')
     qr.make(fit=True)
     # create QR image
-    qr_img = qr.make_image(back_color="transparent")
+    qr_img = qr.make_image(back_color="transperent")
     # open logo image
     logo = Image.open("images/kgec_rs.png")
     # resize logo to fit in the QR code
@@ -235,9 +235,11 @@ def save():
     # add logo to QR code
     pos = ((qr_w - logo_size) // 2, (qr_h - logo_size) // 2)
     qr_img.paste(logo, pos)
-    txt = Image.new('RGBA', bg.size, (255,255,255,0))
-    files = [('All Files', '*.*'), 
-             ("PNG file", "*.png")]
+    if qr_img.mode != "RGBA":
+            qr_img = qr_img.convert("RGBA")
+    txt = Image.new('RGBA', qr_img.size, (255,255,255,0))
+    files = [("PNG file", "*.png"),
+             ('All Files', '*.*')]
     file = filedialog.asksaveasfile(filetypes = files, mode='w', defaultextension=".png")
     if file:
         abs_path = os.path.abspath(file.name)

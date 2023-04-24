@@ -10,12 +10,12 @@ from PIL import Image, ImageTk
 root = Tk()
 root.title("QR Code Maker")
 root.geometry('1100x650')
-root.iconbitmap("images/robot.ico")
+root.iconbitmap(__file__+"\\..\\images\\robot.ico")
 root.resizable(False,False)
 root.configure(background="purple")
 
 #============================================= Background Image
-image = Image.open('images/optimised1.png')
+image = Image.open(__file__+'\\..\\images\\optimised1.png')
 photo_image = ImageTk.PhotoImage(image)
 label = tk.Label(root, image = photo_image)
 label.pack()
@@ -221,12 +221,12 @@ def save():
         error_correction=qrcode.constants.ERROR_CORRECT_H,
         box_size=10,
         border=4)
-    qr.add_data(f'Name:"{Name}", app:"{AppD}", iot:"{IoT}", ml:"{ML}", cloud:"{CD}", mechatronics:"{Mecha}", web:"{WebD}", design:"{Des}", video:"{Vid}", content:"{Cont}"')
+    qr.add_data(f'{Name}, {AppD}, {IoT}, {ML}, {CD}, {Mecha}, {WebD}, {Des}, {Vid}, {Cont}')
     qr.make(fit=True)
     # create QR image
-    qr_img = qr.make_image(back_color="transperent")
+    qr_img = qr.make_image(back_color="transparent")
     # open logo image
-    logo = Image.open("images/kgec_rs.png")
+    logo = Image.open(__file__+"\\..\\images\\kgec_rs.png")
     # resize logo to fit in the QR code
     logo_w, logo_h = logo.size
     qr_w, qr_h = qr_img.size
